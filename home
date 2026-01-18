@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jacob Rubis | BDR & Workflow Strategist</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+      /* --- GLOBAL RESET & VARIABLES --- */
+      :root {
+        --bg: #FAFAFA;
+        --text-main: #111827;
+        --text-muted: #4B5563;
+        --text-light: #9CA3AF;
+        --accent-blue: #2563EB;
+        --accent-green: #059669;
+        --accent-amber: #D97706;
+        --card-bg: rgba(255, 255, 255, 0.90);
+        --border: rgba(0, 0, 0, 0.08);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        --glass: blur(20px);
+      }
+
+      * { box-sizing: border-box; }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text-main);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-350px * 3 - 72px)); }
+      }
+
+      .animate-enter {
+        opacity: 0;
+        animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      }
+      
+      .delay-1 { animation-delay: 0.1s; }
+      .delay-2 { animation-delay: 0.2s; }
+      .delay-3 { animation-delay: 0.3s; }
+
+      /* --- UTILITIES --- */
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      
+      .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      
+      @media (max-width: 768px) {
+        .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 14px;
+        border-radius: 99px;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+      .tag-blue { background: #EFF6FF; color: #1D4ED8; }
+      .tag-green { background: #ECFDF5; color: #047857; }
+      .tag-amber { background: #FFFBEB; color: #B45309; }
+      .tag-dark { background: #1F2937; color: #F3F4F6; }
+      .tag-mit { background: #A31F34; color: white; }
+      .tag-outline { border: 1px solid var(--border); color: var(--text-muted); background: white; }
+      
+      /* New "Popped" Role Tag */
+      .tag-role {
+        background: #F3F4F6;
+        color: #111827;
+        border: 1px solid #D1D5DB;
+        font-weight: 700;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      }
+
+      /* --- COMPONENTS --- */
+      .card {
+        background: var(--card-bg);
+        backdrop-filter: var(--glass);
+        -webkit-backdrop-filter: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+        border-color: rgba(37, 99, 235, 0.3);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .btn-primary {
+        background: #111827;
+        color: white;
+        border: 1px solid #111827;
+      }
+      .btn-primary:hover { background: #374151; border-color: #374151; transform: translateY(-1px); }
+      
+      .btn-outline {
+        background: white;
+        color: #111827;
+        border: 1px solid var(--border);
+      }
+      .btn-outline:hover { background: #F9FAFB; border-color: #9CA3AF; }
+
+      .section-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--accent-blue);
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        display: block;
+      }
+      
+      .section-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--text-main);
+        margin: 0 0 16px 0;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+      }
+      
+      .section-desc {
+        color: var(--text-muted);
+        font-size: 16px;
+        max-width: 600px;
+        margin-bottom: 24px;
+      }
+
+      /* Contact Bar in Hero (Mobile Proof) */
+      .contact-bar {
+        display: flex;
+        gap: 8px 16px;
+        font-size: 14px;
+        color: var(--text-muted);
+        font-weight: 500;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+      }
+      .contact-bar a { color: var(--text-main); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.1); transition: border-color 0.2s; }
+      .contact-bar a:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+      
+      .separator { color: var(--border); display: inline-block; }
+      
+      /* Mobile Proofing: Hide separator on small screens if they wrap */
+      @media (max-width: 600px) {
+        .separator { display: none; }
+        .contact-bar { gap: 8px 24px; }
+      }
+
+      /* Ticker */
+      .ticker-wrap {
+        width: 100%;
+        overflow: hidden;
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        padding: 20px 0;
+      }
+      .ticker-track {
+        display: flex;
+        gap: 24px;
+        width: max-content;
+        animation: scroll 35s linear infinite;
+      }
+      .ticker-card {
+        width: 350px;
+        flex-shrink: 0;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        font-size: 14px;
+        color: var(--text-muted);
+        box-shadow: var(--shadow-sm);
+      }
+      .ticker-author {
+        margin-top: 12px;
+        font-weight: 700;
+        color: var(--text-main);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Stats Row in Builder */
+      .stats-mini-row {
+        display: flex;
+        gap: 24px;
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+      }
+      .stat-mini {
+        display: flex;
+        flex-direction: column;
+      }
+      .stat-mini-val { font-size: 20px; font-weight: 800; color: var(--text-main); }
+      .stat-mini-lbl { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+
+      /* Roadmap Specifics */
+      .roadmap-list { padding-left: 20px; margin: 0; }
+      .roadmap-list li { margin-bottom: 8px; color: var(--text-muted); font-size: 14px; }
+      .roadmap-p { font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+
+      /* Target Roles */
+      .target-roles-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 24px; }
+      .target-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); }
+      .target-roles { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+
+      /* Skills Grid */
+      .skills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+
+      /* CTA Bottom */
+      .cta-card {
+        text-align: center;
+        align-items: center;
+        padding: 40px;
+      }
+
+      /* Blobs */
+      .blob {
+        position: fixed;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        opacity: 0.15;
+      }
+      .blob-1 { top: -200px; left: -200px; background: var(--accent-blue); }
+      .blob-2 { top: 40%; right: -200px; background: var(--accent-amber); }
+      .blob-3 { bottom: -200px; left: 20%; background: var(--accent-green); }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div id="app"></div>
+
+    <script>
+      const root = document.getElementById("app")
+
+      // --- DATA SOURCE ---
+      const data = {
+        meta: {
+          name: "Jacob Rubis",
+          title: "Top-Performing BDR & Workflow Strategist.",
+          email: "jacobrubis@gmail.com",
+          phone: "734-787-2292",
+          linkedin: "https://www.linkedin.com/in/jacobrubis/",
+          resume: "Jacob_Rubis_Resume.pdf",
+          credential: "https://www.credential.net/a307f636-4b47-4760-80bf-5dbe754d8eed#acc.8DtcTaQr"
+        },
+        
+        roles: ["Senior BDR", "Account Executive", "GTM Engineer", "GTM Automation"],
+
+        builderStats: [
+          { val: "30+", lbl: "Reps using shared assets" }, 
+          { val: "8+", lbl: "AI Tools Built" }
+        ],
+
+        // Added Context string for "The What"
+        metricsDesc: "Consistent top performer on my team with coverage across Mid Market, Commercial, and Enterprise accounts with experience selling to net new logos and upselling existing customers.",
+        
+        metrics: [
+          { q: "Q4 2025", meetings: 24, quota: "27/20", pct: 135, pipeline: "$1.1M" },
+          { q: "Q3 2025", meetings: 23, quota: "19/18", pct: 106, pipeline: "$782K" },
+          { q: "Q2 2025", meetings: 20, quota: "19/18", pct: 106, pipeline: "—" }
+        ],
+
+        builder: [
+          {
+            title: "Roleplay Trainer",
+            desc: "Peer feedback: '99% responsible for my high scores... nearly a replica of actual discovery calls.'", 
+            tag: "Enablement"
+          },
+          {
+            title: "Disco Prep Speed Run",
+            desc: "Standardized briefing template for intro calls with key context and prep.",
+            tag: "Prep"
+          },
+          {
+            title: "Post-Call Workflow",
+            desc: "Captures important details and auto-drafts follow-up emails. 'Detailed, organized, and relevant.'", 
+            tag: "Productivity"
+          },
+          {
+            title: "Account Planning",
+            desc: "Strategic account planning tool following the 9-box style to identify key opportunities.",
+            tag: "Strategy"
+          },
+          {
+            title: "Industry Intel",
+            desc: "Generates concise sales briefs to drive outreach topics and support account plan building.",
+            tag: "Research"
+          },
+          {
+            title: "Pre-Call Briefing",
+            desc: "Turns scattered research into a standardized briefing with key players, context, and pains.",
+            tag: "Efficiency"
+          }
+        ],
+
+        mit: {
+            title: "Applied Agentic AI for Organizational Transformation",
+            hours: "70 Hours",
+            desc: "Completed MIT's comprehensive course on agentic AI. Learned practical frameworks, examples, and real-world applications to elevate how our team uses AI to streamline workflows and drive measurable impact."
+        },
+
+        testimonials: [
+          {
+            text: "\"Your Roleplay Agent is 99% responsible for my high scores... it was nearly a replica of the actual discovery calls.\"", 
+            author: "BDR // Peer Review"
+          },
+          {
+            text: "\"Pre-call notes are detailed, organized, and relevant. He's capturing important details and even includes a follow-up email post-call.\"", 
+            author: "Mid-Market AE" 
+          },
+          {
+            text: "\"Process-first... tools others use daily. Aiming to improve the team's success rate, not just my own.\"", 
+            author: "Operating Principle"
+          }
+        ],
+
+        roadmap: [
+          {
+            tag: "Areas of Interest",
+            type: "list",
+            items: [
+              "Full-cycle sales roles (owning customer journey)",
+              "AI & Innovation roles (Tech + GTM Strategy)",
+              "GTM Engineering (Tech, Sales, Ops)"
+            ]
+          },
+          {
+            tag: "1 Year Goal (End of 2026)",
+            type: "text",
+            content: "Transition into a full-cycle AE role where I can continue building enablement tools while developing core selling capabilities. I want to stay customer-facing and contribute to team success through individual performance and scalable resources."
+          },
+          {
+            tag: "3-5 Year Vision",
+            type: "text",
+            content: "Establish myself as a top-performing full-cycle seller while positioning for sales leadership or GTM Engineering. I aim to define how teams use AI to drive revenue at the intersection of technology, sales, and strategy."
+          }
+        ],
+
+        about: [
+          "I grew up in Michigan, raised by an elementary school teacher and a dad who coached my baseball teams and worked the line at Ford before getting in sales himself. Before every game, my dad would tell me, 'Have fun, play smart, and be humble.' I strive to apply this motto to every aspect of my personal and professional life, ensuring I stay grounded while chasing ambitious goals.",
+          "Midwest values like work ethic, humility, community, and reliability were instilled early. I've always been a high achiever, and when I got to college I knew business was the direction, but it wasn't until my sophomore year at Michigan State that I found sales and it clicked.",
+          "For me, sales is about solving problems. The puzzle is what I like. I've always tried to do things efficiently, which is what drew me to tech sales. I focus on selling a product that drives efficiency while constantly finding ways to work smarter myself."
+        ],
+
+        skills: [
+          "Prompt Engineering",
+          "AI-powered Workflow Development",
+          "Salesforce",
+          "Outreach",
+          "Salesloft",
+          "Microsoft Dynamics",
+          "LinkedIn Sales Navigator",
+          "Tableau & PowerBI",
+          "Analytical Problem Solving",
+          "Collaboration + Relationship Building",
+          "AI-Augmented Work + Ethics",
+          "Strategic AI Expertise",
+          "Operational Excellence",
+          "GTM Orchestration",
+          "SPICED & BANT Frameworks"
+        ]
+      }
+
+      // --- COMPONENT BUILDER ---
+      const h = (tag, className, children) => {
+        const el = document.createElement(tag)
+        if (className) el.className = className
+        if (children) {
+          if (Array.isArray(children)) children.forEach(c => el.appendChild(c))
+          else if (typeof children === 'string') el.textContent = children
+          else el.appendChild(children)
+        }
+        return el
+      }
+
+      // --- SECTIONS ---
+
+      const Nav = () => {
+        const nav = h('nav', 'card', [
+          h('div', '', [
+            h('span', 'metric-val', data.meta.name),
+          ])
+        ])
+        Object.assign(nav.style, { position: 'sticky', top: '24px', zIndex: '100', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: '40px', padding: '16px' })
+        return nav
+      }
+
+      const Hero = () => {
+        const wrap = h('header', 'animate-enter', [
+          h('div', 'tag tag-blue', 'Open to Work'),
+          
+          // VISIBLE CONTACT BAR
+          h('div', 'contact-bar', [
+            h('span', '', data.meta.email),
+            h('span', 'separator', '|'),
+            h('span', '', data.meta.phone),
+            h('span', 'separator', '|'),
+            h('a', '', 'LinkedIn')
+          ]),
+
+          h('h1', 'section-title', data.meta.title),
+          h('p', 'section-desc', h('em', '', data.meta.tagline)),
+          
+          // Target Roles with POP style
+          h('div', 'target-roles-wrapper', [
+             h('span', 'target-label', 'Interested In'),
+             h('div', 'target-roles', data.roles.map(r => h('span', 'tag tag-role', r)))
+          ]),
+          
+          // Resume Link
+          h('div', '', [ 
+            h('a', 'btn btn-outline', 'Download Resume')
+          ])
+        ])
+        Object.assign(wrap.style, { textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px 0 20px 0', gap: '16px' })
+        
+        // Single Line Fix
+        wrap.childNodes[2].style.fontSize = '24px' 
+        wrap.childNodes[2].style.whiteSpace = 'nowrap'
+        wrap.childNodes[2].style.overflow = 'hidden'
+        wrap.childNodes[2].style.textOverflow = 'ellipsis'
+        wrap.childNodes[2].style.maxWidth = '100%'
+
+        const linkedinLink = wrap.childNodes[1].lastChild
+        linkedinLink.href = data.meta.linkedin
+        linkedinLink.target = "_blank"
+        
+        wrap.lastChild.firstChild.style.marginTop = "24px"
+        wrap.lastChild.firstChild.href = data.meta.resume
+        wrap.lastChild.firstChild.target = "_blank"
+        
+        return wrap
+      }
+
+      const About = () => {
+        const section = h('section', 'animate-enter delay-1', [
+          h('div', 'card', [
+            h('span', 'section-label', 'Identity & Background'),
+            h('h3', 'section-title', 'About Me'),
+            ...data.about.map(txt => h('p', 'roadmap-p', txt))
+          ])
+        ])
+        section.firstChild.childNodes.forEach((n, i) => {
+          if(i > 1) n.style.marginBottom = '12px'
+        })
+        section.style.marginBottom = '60px'
+        return section
+      }
+      
+      const MitCourse = () => {
+        const section = h('section', 'animate-enter delay-1', [
+           h('div', 'card', [
+             h('div', '', [
+                h('span', 'tag tag-mit', 'MIT Certification'),
+                h('span', 'section-label', ' // ' + data.mit.hours)
+             ]),
+             h('h3', 'section-title', data.mit.title),
+             h('p', 'roadmap-p', data.mit.desc),
+             h('div', '', [ h('a', 'btn btn-outline', 'Link to Credential') ])
+           ])
+        ])
+        
+        Object.assign(section.firstChild.firstChild.style, { display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '12px' })
+        section.firstChild.firstChild.lastChild.style.marginBottom = '0'
+        section.firstChild.childNodes[1].style.fontSize = '22px'
+        section.firstChild.childNodes[1].style.marginTop = '8px'
+        
+        section.firstChild.lastChild.style.marginTop = '24px'
+        section.firstChild.lastChild.firstChild.href = data.meta.credential
+        section.firstChild.lastChild.firstChild.target = "_blank"
+        
+        section.style.marginBottom = '60px'
+        return section
+      }
+
+      const Metrics = () => {
+        const section = h('section', 'animate-enter delay-1', [
+          h('span', 'section-label', 'The What'),
+          h('h2', 'section-title', 'High-Conversion Performance'),
+          
+          // New Description Text
+          h('p', 'section-desc', data.metricsDesc),
+
+          h('div', 'grid-3', data.metrics.map((m, i) => {
+            const isHigh = m.pct > 100
+            const card = h('div', 'card', [
+              h('div', '', [
+                h('div', '', [ h('span', 'metric-val', m.q), h('span', isHigh ? 'tag tag-green' : 'tag tag-blue', m.pct + '% Quota') ]),
+                h('div', '', [ h('span', 'metric-lbl', 'Meetings Booked'), h('span', 'metric-val', m.meetings + "") ]),
+                h('div', '', [ h('span', 'metric-lbl', 'Pipeline Generated'), h('span', 'metric-val', m.pipeline) ])
+              ])
+            ])
+            card.firstChild.childNodes.forEach(row => { Object.assign(row.style, { display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }) })
+            const barBg = h('div', '', h('div', '', ''))
+            Object.assign(barBg.style, { height: '6px', background: '#E5E7EB', borderRadius: '4px', marginTop: '16px' })
+            Object.assign(barBg.firstChild.style, { height: '100%', width: Math.min(m.pct, 100) + '%', background: m.pct >= 100 ? '#059669' : '#2563EB', borderRadius: '4px' })
+            card.appendChild(barBg)
+            return card
+          }))
+        ])
+        section.style.marginBottom = '80px'
+        return section
+      }
+
+      const Builder = () => {
+        const section = h('section', 'animate-enter delay-2', [
+          h('span', 'section-label', 'The How'),
+          h('h2', 'section-title', 'Builder Mindset'),
+          h('p', 'section-desc', "I've built tools for myself and reps on the floor to increase efficiency, productivity, and allow more time for revenue generating activities."),
+          
+          // Stats Row
+          h('div', 'stats-mini-row', data.builderStats.map(s => 
+            h('div', 'stat-mini', [
+              h('span', 'stat-mini-val', s.val),
+              h('span', 'stat-mini-lbl', s.lbl)
+            ])
+          )),
+
+          h('div', 'grid-3', data.builder.map(b => 
+            h('div', 'card', [
+              h('span', 'tag tag-amber', b.tag),
+              h('h3', 'metric-val', b.title),
+              h('p', 'metric-lbl', b.desc)
+            ])
+          ))
+        ])
+        
+        Array.from(section.lastChild.childNodes).forEach(c => {
+          c.childNodes[1].style.fontSize = '18px'; c.childNodes[1].style.margin = '16px 0 8px 0';
+          c.childNodes[2].style.fontSize = '14px'; c.childNodes[2].style.lineHeight = '1.6';
+        })
+        section.style.marginBottom = '60px'
+        return section
+      }
+
+      const Ticker = () => {
+        const track = h('div', 'ticker-track', [])
+        const list = [...data.testimonials, ...data.testimonials, ...data.testimonials]
+        list.forEach(t => {
+          track.appendChild(h('div', 'ticker-card', [ h('div', '', t.text), h('div', 'ticker-author', t.author) ]))
+        })
+        const wrap = h('div', 'ticker-wrap animate-enter delay-2', track)
+        wrap.style.marginBottom = '80px'
+        return wrap
+      }
+
+      const Roadmap = () => {
+        const section = h('section', 'animate-enter delay-3', [
+          h('span', 'section-label', 'Vision'),
+          h('h2', 'section-title', 'Future Roadmap'),
+          h('div', 'grid-3', data.roadmap.map(item => {
+            const content = item.type === 'list' 
+              ? h('ul', 'roadmap-list', item.items.map(li => h('li', '', li)))
+              : h('p', 'roadmap-p', item.content)
+            
+            return h('div', 'card', [
+              h('span', 'tag tag-dark', item.tag),
+              h('div', '', ''), // spacer
+              content
+            ])
+          }))
+        ])
+        Array.from(section.lastChild.childNodes).forEach(card => {
+          card.childNodes[1].style.height = "16px"
+        })
+        section.style.marginBottom = '80px'
+        return section
+      }
+
+      const Skills = () => {
+        const section = h('section', 'animate-enter delay-3', [
+          h('span', 'section-label', 'Capabilities'),
+          h('h2', 'section-title', 'Core Skills'),
+          h('div', 'skills-grid', data.skills.map(s => h('span', 'tag tag-outline', s)))
+        ])
+        section.style.marginBottom = '80px'
+        return section
+      }
+
+      // NEW BOTTOM CTA
+      const BottomCTA = () => {
+        const section = h('section', 'animate-enter delay-3', [
+          h('div', 'card cta-card', [
+             h('h2', 'section-title', 'Ready to Build Together?'),
+             h('p', 'section-desc', 'Open to opportunities in Full-Cycle Sales, GTM Engineering, and Automation.'),
+             h('a', 'btn btn-primary', 'Email Me')
+          ])
+        ])
+        section.style.marginBottom = '60px'
+        section.firstChild.lastChild.href = "mailto:" + data.meta.email
+        return section
+      }
+
+      const Footer = () => {
+        const f = h('footer', '', [
+          h('div', 'metric-lbl', '© 2026 Jacob Rubis. Built with code.'),
+          h('div', 'metric-lbl', 'Based in San Diego, CA.')
+        ])
+        Object.assign(f.style, { textAlign: 'center', paddingBottom: '40px', display: 'flex', justifyContent: 'space-between' })
+        return f
+      }
+
+      // --- ASSEMBLY ---
+      const container = h('div', 'container', [
+        Nav(), Hero(), About(), MitCourse(), Metrics(), Builder(), Ticker(), Roadmap(), Skills(), BottomCTA(), Footer()
+      ])
+
+      root.appendChild(container)
+
+    </script>
+  </body>
+</html>
